@@ -1,0 +1,89 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Development Server",
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": ["$tsc-watch"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build Production",
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Run Tests",
+      "type": "npm",
+      "script": "test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Start Docker Services",
+      "type": "shell",
+      "command": "docker-compose up -d",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Stop Docker Services",
+      "type": "shell",
+      "command": "docker-compose down",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Open Prisma Studio",
+      "type": "npm",
+      "script": "prisma:studio",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Generate Prisma Client",
+      "type": "npm",
+      "script": "prisma:generate",
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint",
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "Type Check",
+      "type": "npm",
+      "script": "typecheck",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Full Project Setup",
+      "type": "shell",
+      "command": "npm run setup && docker-compose up -d",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}

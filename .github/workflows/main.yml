@@ -1,0 +1,91 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Generate Prisma client
+      run: npx prisma generate
+      
+    - name: Lint
+      run: npm run lint
+    
+    - name: Type check
+      run: npm run typecheck
+    
+    - name: Run tests
+      run: npm run test
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+        JWT_SECRET: test-secret-key
+        NODE_ENV: test
+
+  build:
+    name: 🏗️ Build
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Generate Prisma client
+      run: npx prisma generate
+    
+    - name: Build
+      run: npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: |
+          dist/
+          package.json
+          package-lock.json
+          prisma/
+          README.md
+          .env.example
