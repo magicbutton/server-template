@@ -179,6 +179,7 @@ This template is fully configured for GitHub Codespaces with:
 2. Pre-configured extensions and settings
 3. Docker Compose setup with all required services
 4. Automated setup script that runs on container creation
+5. Claude Code CLI pre-installed for AI assistance
 
 To use with Codespaces:
 
@@ -186,6 +187,7 @@ To use with Codespaces:
 2. Click the "Code" button on GitHub and select "Create codespace on main"
 3. Wait for the environment to set up
 4. Start the server with `npm run dev`
+5. Use Claude Code by typing `claude` in the terminal
 
 ## Production Deployment
 

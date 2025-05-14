@@ -12,8 +12,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install global node packages
-RUN npm install -g npm@latest typescript ts-node nodemon
+# Install global node packages - use specific versions to avoid compatibility issues
+RUN npm install -g typescript@5.3.2 ts-node@10.9.1 nodemon@3.0.1 @anthropic-ai/claude-code
 
 # Set development environment
 ENV NODE_ENV=development
