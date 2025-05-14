@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ..:/workspace:cached
+      - ..:/workspaces:cached
     command: sleep infinity
     environment:
       - NODE_ENV=development

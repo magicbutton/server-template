@@ -2,7 +2,7 @@
   "name": "Magic Server Development",
   "dockerComposeFile": "../docker-compose.yaml",
   "service": "app",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspaces/magic-server",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -28,7 +28,7 @@
     }
   },
   "forwardPorts": [3000, 8080, 8081, 5432, 5050, 16686, 9090, 3210],
-  "postCreateCommand": "npm run setup",
+  "postCreateCommand": "chmod +x ./.devcontainer/post-create.sh && ./.devcontainer/post-create.sh",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "18"
